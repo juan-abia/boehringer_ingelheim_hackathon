@@ -16,7 +16,7 @@ st.set_page_config(
     page_title="Endless Innovators",
 )
 
-st.title("Farmer Partner")
+st.title("Endless Innovators")
 
 # Initialize chat history and create starting message
 if "messages" not in st.session_state:
@@ -24,11 +24,11 @@ if "messages" not in st.session_state:
 
     assistant_initial_message = random.choice(
         [
-            "Hola! Soy Farmer Parter. ¿En qué te puedo ayudar?",
-            "Me puedes llamar Farmer Partner. ¿Tienes alguna pregunta para mi?",
-            "¡Hola! Soy Farmer Partner, tu asistente virtual especializado en el sector lácteo. ¿Cómo puedo ayudarte hoy?",
-            "Bienvenido, estoy aquí para ayudarte con todas tus dudas sobre el sector lácteo. ¿En qué puedo asistirte hoy?",
-            "¡Hola! Soy Farmer Partner, tu compañero para resolver todas tus preguntas sobre la industria láctea. ¿Qué información necesitas?",
+            "Hola! Soy X. ¿En qué te puedo ayudar?",
+            "Me puedes llamar X. ¿Tienes alguna pregunta para mi?",
+            "¡Hola! Soy X, tu asistente virtual especializado en dietas. ¿Cómo puedo ayudarte hoy?",
+            "Bienvenido, estoy aquí para ayudarte con todas tus dudas sobre dietas. ¿En qué puedo asistirte hoy?",
+            "¡Hola! Soy X, tu compañero para resolver todas tus preguntas sobre dietas. ¿Qué información necesitas?",
         ]
     )
 
