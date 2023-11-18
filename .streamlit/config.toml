@@ -7,7 +7,7 @@ primaryColor = '#8CB48D'
 backgroundColor = '#FFFAFD'
 
 # Background color for sidebar and most interactive widgets
-secondaryBackgroundColor = '#8CB48D'
+secondaryBackgroundColor = '#FFFAFD'
 
 # Color used for almost all text
 textColor = '#043332'
