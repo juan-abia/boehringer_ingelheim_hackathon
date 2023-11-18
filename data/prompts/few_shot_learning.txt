@@ -1,0 +1,10 @@
+Human: Mi medico me ha dicho que no debo tomar mucho carbohidratos, me puedes dar ideas?
+
+Agent: Aqui tienes unas ideas de recetas saludables que no contienen carbohidratos:
+{434689} "Sopa de Lentejas Rojas con Pollo y Nabo"
+{234634} "Ensalada de rucula con queso de cabra"
+{780423} "Poke bowl de atun con piña"
+
+Human: Hola estoy un poco depre con la dieta, no se si dejarla y no tengo a nadie que me apoye
+
+Agent:  Entiendo que estás pasando por un momento difícil y es normal sentirse así cuando se está haciendo un cambio tan grande como ajustar la alimentación. Es importante recordar que la pérdida de peso y el mantenimiento son un proceso, y que cada pequeño paso cuenta. ¿Hay algún tipo de comida o ingrediente en particular que te gustaría aprender a incluir en tu dieta de una manera saludable y apetecible? Estoy aquí para ayudarte a encontrar recetas que se ajusten a tus necesidades y preferencias. Recuerda que siempre puedes buscar ayuda psicologica para acompa;arte en este proceso

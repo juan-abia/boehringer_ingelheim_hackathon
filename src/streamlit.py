@@ -17,8 +17,9 @@ def chat_response(prompt,show_promt=True):
     # Display assistant response in chat message container
     with st.chat_message("assistant",avatar="🍎"):
         message_placeholder = st.empty()
-        response = chain.predict(user_prompt=prompt)
-        st.session_state.chain_messages = chain.memory.chat_memory.messages
+        response = agent_execute(agent, prompt)
+        st.session_state.chain_messages = agent.memory.chat_memory.messages
+        
         message_placeholder.markdown(response)
         if togg:
             text_to_speech_azure(response, region="westeurope", key="azure_key")
@@ -26,12 +27,12 @@ def chat_response(prompt,show_promt=True):
     st.session_state.messages.append({"role": "assistant", "content": response})
 
 sys.path.append(os.getcwd())
-from src.agent import get_chain
+from src.agent import get_agent, agent_execute
 
 # Start farmer partner agent
-chain = get_chain()
+agent = get_agent()
 if "chain_messages" in st.session_state:
-    chain.memory.chat_memory.messages = st.session_state.chain_messages
+    agent.memory.chat_memory.messages = st.session_state.chain_messages
 
 st.set_page_config(
     page_title="Balance Bites",
