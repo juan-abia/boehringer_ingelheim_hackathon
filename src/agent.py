@@ -19,8 +19,9 @@ def get_llm():
 
 
 def agent_execute(agent, user_input):
-    return agent.run(get_prompt() + user_input)
-
+    response = agent.run(get_prompt() + user_input + "\nAgent:")
+    print(response)
+    return response
 
 def get_agent():
     llm = get_llm()

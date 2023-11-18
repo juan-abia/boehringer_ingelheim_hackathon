@@ -4,5 +4,5 @@ from langchain.globals import set_debug
 CURR_DIR = Path(__file__)
 SRC_DIR = CURR_DIR.parents[1]
 
-DEBUG = False
+DEBUG = True
 set_debug(DEBUG)
