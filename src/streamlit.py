@@ -3,6 +3,27 @@ import streamlit as st
 import random
 from PIL import Image
 import sys
+from text2speech2text import text_to_speech_azure
+from streamlit_mic_recorder import speech_to_text
+
+def chat_response(prompt,show_promt=True):
+    if show_promt:
+        # Add user message to chat history
+        st.session_state.messages.append({"role": "user", "content": prompt})
+        # Display user message in chat message container
+        with st.chat_message("user",avatar="👤"):
+            st.markdown(prompt)
+
+    # Display assistant response in chat message container
+    with st.chat_message("assistant",avatar="🍎"):
+        message_placeholder = st.empty()
+        response = chain.predict(user_prompt=prompt)
+        st.session_state.chain_messages = chain.memory.chat_memory.messages
+        message_placeholder.markdown(response)
+        if togg:
+            text_to_speech_azure(response, region="westeurope", key="azure_key")
+    # Add assistant response to chat history
+    st.session_state.messages.append({"role": "assistant", "content": response})
 
 sys.path.append(os.getcwd())
 from src.agent import get_chain
@@ -24,7 +45,10 @@ st.sidebar.image(image,use_column_width="always")
 st.title("_Balance Bites_ :apple:")
 
 # header
-st.header("Las recetas que más te gustan con el apoyo que necesitas")
+st.header("Las recetas que más te gustan, con el apoyo que necesitas")
+
+# Buttons side by side using st.columns
+button1_col, button2_col = st.columns(2)
 
 # Initialize chat history and create starting message
 if "messages" not in st.session_state:
@@ -53,40 +77,32 @@ for message in st.session_state.messages:
         with st.chat_message(message["role"],avatar="👤"):
             st.markdown(message["content"])
         
-
-# Buttons side by side using st.columns
-button1_col, button2_col, button3_col = st.columns(3)
-
 with button1_col:
     button1_clicked = st.button('Plan semanal', help="Pulsa aquí si quieres tu plan semanal personalizado de comidas.")
 with button2_col:
     button2_clicked = st.button('Motivación', help="Pulsa aquí si necesitas motivación con tu dieta.")
-with button3_col:
-    button3_clicked = st.button('Háblame', help="Pulsa aquí si quieres que el chat te lea los mensajes.")
+
+togg = st.sidebar.toggle('Usar Audio y Voz', help="Activa esta opción si quieres usar tu voz y que el chat te lea los mensajes.")
+if togg:
+    with st.sidebar:
+        listened_text=speech_to_text(start_prompt="🎙️",stop_prompt="⏹️",language='es',use_container_width=True,just_once=True)
 
 # Check if buttons are clicked
 if button1_clicked:
-    st.write("Button 1 clicked!")
-if button2_clicked:
-    st.write("Button 2 clicked!")
-if button3_clicked:
-    st.write("Button 3 clicked!")
+    prompt = "Haz un plan semanal basado en la información que tienes de mi dieta hasta el momento."
+    chat_response(prompt,show_promt=False)
 
+if button2_clicked:
+    # Add user message to chat history
+    prompt = "Me siento falto de ánimos para seguir con mi dieta, por favor, anímame."
+    chat_response(prompt,show_promt=False)
+
+try:
+    if listened_text:
+       chat_response(listened_text)
+except:
+    pass
 
 # Accept user input
 if prompt := st.chat_input("Puedo ayudarte en algo?"):
-    # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    # Display user message in chat message container
-    with st.chat_message("user",avatar="👤"):
-        st.markdown(prompt)
-
-    # Display assistant response in chat message container
-    with st.chat_message("assistant",avatar="🍎"):
-        message_placeholder = st.empty()
-        response = chain.predict(user_prompt=prompt)
-        st.session_state.chain_messages = chain.memory.chat_memory.messages
-
-        message_placeholder.markdown(response)
-    # Add assistant response to chat history
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    chat_response(prompt)

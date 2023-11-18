@@ -65,7 +65,7 @@ def mp3_to_text(mp3_file):
         except sr.RequestError as e:
             print(f'Error en la solicitud a Google Web Speech API: {e}')
 
-def text_to_speech_azure(text, language="en-US", region="Your_Region", key="Your_Subscription_Key"):
+def text_to_speech_azure(text, language="es-ES", region="Your_Region", key="Your_Subscription_Key"):
     """
     Convierte texto a voz usando Azure Text-to-Speech.
 
@@ -77,6 +77,7 @@ def text_to_speech_azure(text, language="en-US", region="Your_Region", key="Your
     # Configurar la conexión con el servicio Azure TTS
     speech_config = speechsdk.SpeechConfig(subscription=key, region=region)
     speech_config.speech_synthesis_language = language
+    speech_config.speech_synthesis_voice_name = "es-ES-AlvaroNeural"
 
     # Crear un sintetizador de voz
     speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
