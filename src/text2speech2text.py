@@ -87,8 +87,8 @@ def text_to_speech_azure(text, language="es-ES", region="Your_Region", key="Your
     # Crear un sintetizador de voz
     try:
         speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
-    except:
-        logging.error(f"Ups synth: {speech_synthesizer}")
+    except Exception as e:
+        logging.error(f"Ups synth: {e}")
     logging.info("Done synth")
     # Sintetizar el texto
     result = speech_synthesizer.speak_text_async(text).get()
