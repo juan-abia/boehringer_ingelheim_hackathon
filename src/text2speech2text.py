@@ -21,6 +21,23 @@ def text_to_speech(text, language='es', output_file='output.mp3'):
     #os.system(f"start {output_file}")  # Windows
     os.system(f"xdg-open {output_file}")  # Linux
 
+def micro_to_text():
+    # Inicializar el reconocedor
+    r = sr.Recognizer()
+
+    # Capturar el audio del micrófono
+    with sr.Microphone() as source:
+        print("Habla algo:")
+        audio = r.listen(source)
+
+    # Intentar reconocer el audio
+    try:
+        text = r.recognize_google(audio, language="es-ES")
+        return text
+    except sr.UnknownValueError:
+        return ("No pude entender el audio")
+    except sr.RequestError as e:
+        return ("No se pudo obtener resultados; {0}".format(e))
 
 def mp3_to_text(mp3_file):
     # Convertir el archivo MP3 a formato WAV (requerido por SpeechRecognition)
@@ -48,7 +65,7 @@ def mp3_to_text(mp3_file):
         except sr.RequestError as e:
             print(f'Error en la solicitud a Google Web Speech API: {e}')
 
-def text_to_speech_azure(text, language="es-ES", region="Your_Region", key="Your_Subscription_Key"):
+def text_to_speech_azure(text, language="en-US", region="Your_Region", key="Your_Subscription_Key"):
     """
     Convierte texto a voz usando Azure Text-to-Speech.
 
@@ -60,7 +77,7 @@ def text_to_speech_azure(text, language="es-ES", region="Your_Region", key="Your
     # Configurar la conexión con el servicio Azure TTS
     speech_config = speechsdk.SpeechConfig(subscription=key, region=region)
     speech_config.speech_synthesis_language = language
-    speech_config.speech_synthesis_voice_name = "es-ES-AlvaroNeural"
+
     # Crear un sintetizador de voz
     speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
 
@@ -79,23 +96,4 @@ def text_to_speech_azure(text, language="es-ES", region="Your_Region", key="Your
 
 
 if __name__ == "__main__":
-
-    # Texto que deseas convertir a voz
-    texto_a_convertir = "¡Hola Flores! Esto es un test para ver cómo de natural hablo. ¿Qué te parece? Tengo una voz un poco rara pero entusiasta"
-
-    # Ejemplo de uso
-    text_to_speech_azure(texto_a_convertir, region="westeurope", key="xxx")
-
-    # Llama a la función para convertir texto a voz
-    # text_to_speech(texto_a_convertir)
-
-    # Ruta al archivo MP3 que deseas convertir a texto
-    archivo_mp3 = "output.mp3"
-
-    # Llama a la función para convertir audio a texto
-    # mp3_to_text(archivo_mp3)
-
-    # if os.path.exists(archivo_mp3):
-    #     os.remove(archivo_mp3)
-
-
+    print(micro_to_text())
