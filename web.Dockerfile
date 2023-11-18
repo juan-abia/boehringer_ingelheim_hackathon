@@ -30,6 +30,6 @@ RUN python3 -m pip freeze
 # Copy repo folder to working directory
 COPY ./ ./
 
-RUN chmod a+x src/run.sh
+RUN chmod a+x src/run_web.sh
 
-CMD ["./src/run.sh"]
+CMD ["./src/run_web.sh"]

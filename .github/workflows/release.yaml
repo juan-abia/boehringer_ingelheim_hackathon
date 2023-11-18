@@ -7,7 +7,8 @@ on:
 
 env:
   imageRegistry: boehringeringelheim.azurecr.io
-  imageRepository: boehringeringelheim
+  webImageRepository: boehringeringelheim
+  apiImageRepository: apiboehringeringelheim
 
 jobs:
   push_to_registry:
@@ -25,9 +26,18 @@ jobs:
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
 
-      # Construir el contenedor y subirlo al registro
+      # Construir el contenedor de web y subirlo al registro
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ env.imageRegistry }}/${{ env.imageRepository }}:latest
+          tags: ${{ env.imageRegistry }}/${{ env.webImageRepository }}:latest
+          file: web.Dockerfile
+
+      # Construir el contenedor de api y subirlo al registro
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ${{ env.imageRegistry }}/${{ env.apiImageRepository }}:latest
+          file: api.Dockerfile
