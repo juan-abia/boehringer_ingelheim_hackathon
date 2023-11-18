@@ -6,6 +6,8 @@ import sys
 from text2speech2text import text_to_speech_azure
 from streamlit_mic_recorder import speech_to_text
 
+azure_key = os.environ["AZURESPEECH_API_KEY"]
+
 def chat_response(prompt,show_promt=True):
     if show_promt:
         # Add user message to chat history
@@ -22,7 +24,7 @@ def chat_response(prompt,show_promt=True):
         
         message_placeholder.markdown(response)
         if togg:
-            text_to_speech_azure(response, region="westeurope", key="azure_key")
+            text_to_speech_azure(response, region="westeurope", key=azure_key)
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
 
