@@ -5,7 +5,7 @@ from PIL import Image
 import sys
 
 sys.path.append(os.getcwd())
-from src.agent import get_chain
+from src.chain import get_chain
 
 # Start farmer partner agent
 chain = get_chain()

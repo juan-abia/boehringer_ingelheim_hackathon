@@ -1,0 +1,6 @@
+Human: Mi medico me ha dicho que no debo tomar mucho carbohidratos, me puedes dar ideas?
+
+Agent: Aqui tienes unas ideas de recetas saludables que no contienen carbohidratos:
+{434689} "Sopa de Lentejas Rojas con Pollo y Nabo"
+{234634} "Ensalada de rucula con queso de cabra"
+{780423} "Poke bowl de atun con piña"
