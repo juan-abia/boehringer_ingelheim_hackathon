@@ -99,6 +99,8 @@ def text_to_speech_azure(text, language="es-ES", region="Your_Region", key="Your
         if cancellation.reason == speechsdk.CancellationReason.Error:
             logging.error(f"Código de error: {cancellation.error_code}")
             logging.error(f"Detalles del error: {cancellation.error_details}")
+    else:
+        logging.error(f"Error de síntesis de voz: {result.reason}")
 
 
 if __name__ == "__main__":
