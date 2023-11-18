@@ -85,11 +85,14 @@ def text_to_speech_azure(text, language="es-ES", region="Your_Region", key="Your
     logging.info("Using language: " + speech_config.speech_synthesis_language)
     
     # Crear un sintetizador de voz
-    speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
-
+    try:
+        speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
+    except:
+        logging.error(f"Ups synth: {speech_synthesizer}")
+    logging.info("Done synth")
     # Sintetizar el texto
     result = speech_synthesizer.speak_text_async(text).get()
-    logging.info("Done")
+    logging.info("Done result")
 
     # Verificar si la síntesis fue exitosa
     if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
