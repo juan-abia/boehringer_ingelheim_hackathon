@@ -24,7 +24,7 @@ class FindRecipesByIngredients(BaseTool):
         base_url = "https://api.spoonacular.com/recipes/complexSearch"
         params = {
             'apiKey': api_key,
-            'number': 5,
+            'number': 7,
             'ranking': 1,
             'includeIngredients': include_ingredients,
             'excludeIngredients': exclude_ingredients,

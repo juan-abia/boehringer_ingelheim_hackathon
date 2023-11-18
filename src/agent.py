@@ -1,7 +1,7 @@
 import os
+import re
 from dotenv import load_dotenv
 from langchain.chat_models import ChatOpenAI
-from langchain.agents import AgentExecutor
 from langchain.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 from langchain.agents import AgentType, initialize_agent
@@ -20,8 +20,9 @@ def get_llm():
 
 def agent_execute(agent, user_input):
     response = agent.run(get_prompt() + user_input + "\nAgent:")
-    print(response)
-    return response
+    cleaned_response = re.sub(r'\s*{[^}]*}\s*', '', response)
+    return cleaned_response
+
 
 def get_agent():
     llm = get_llm()
