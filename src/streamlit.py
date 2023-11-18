@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 import streamlit as st
 import random
 from PIL import Image
@@ -6,6 +7,9 @@ import sys
 from text2speech2text import text_to_speech_azure
 from streamlit_mic_recorder import speech_to_text
 
+
+
+load_dotenv()
 azure_key = os.environ["AZURESPEECH_API_KEY"]
 
 def chat_response(prompt,show_promt=True):
@@ -19,7 +23,8 @@ def chat_response(prompt,show_promt=True):
     # Display assistant response in chat message container
     with st.chat_message("assistant",avatar="🍎"):
         message_placeholder = st.empty()
-        response = agent_execute(agent, prompt)
+        with st.spinner("Pensando..."):
+            response = agent_execute(agent, prompt)
         st.session_state.chain_messages = agent.memory.chat_memory.messages
         
         message_placeholder.markdown(response)
@@ -37,21 +42,34 @@ if "chain_messages" in st.session_state:
     agent.memory.chat_memory.messages = st.session_state.chain_messages
 
 st.set_page_config(
-    page_title="Balance Bites",
+    page_title="Balanced Bites",
     page_icon="./data/logo.png"
 )
+
+st.markdown("""
+<style>
+    [data-testid=stSidebar] {
+        background-color: #8CB48D;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 image = Image.open("./data/logo.png")
 
 st.sidebar.image(image,use_column_width="always")
+st.sidebar.divider()
+st.sidebar.header("Acceso rápido:")
+button1_clicked = st.sidebar.button('Plan semanal', use_container_width=True,help="Pulsa aquí si quieres tu plan semanal personalizado de comidas.")
+button2_clicked = st.sidebar.button('Motivación', use_container_width=True,help="Pulsa aquí si necesitas motivación con tu dieta.")
+st.sidebar.divider()
+st.sidebar.header("Configuración:")
+togg = st.sidebar.toggle('Usar Audio y Voz', help="Activa esta opción si quieres usar tu voz y que el chat te lea los mensajes.")
 
-st.title("_Balance Bites_ :apple:")
+st.title("_Balanced Bites_ :apple:")
 
 # header
 st.header("Las recetas que más te gustan, con el apoyo que necesitas")
 
-# Buttons side by side using st.columns
-button1_col, button2_col = st.columns(2)
 
 # Initialize chat history and create starting message
 if "messages" not in st.session_state:
@@ -80,12 +98,6 @@ for message in st.session_state.messages:
         with st.chat_message(message["role"],avatar="👤"):
             st.markdown(message["content"])
         
-with button1_col:
-    button1_clicked = st.button('Plan semanal', help="Pulsa aquí si quieres tu plan semanal personalizado de comidas.")
-with button2_col:
-    button2_clicked = st.button('Motivación', help="Pulsa aquí si necesitas motivación con tu dieta.")
-
-togg = st.sidebar.toggle('Usar Audio y Voz', help="Activa esta opción si quieres usar tu voz y que el chat te lea los mensajes.")
 if togg:
     with st.sidebar:
         listened_text=speech_to_text(start_prompt="🎙️",stop_prompt="⏹️",language='es',use_container_width=True,just_once=True)
