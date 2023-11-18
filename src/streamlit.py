@@ -6,13 +6,14 @@ from PIL import Image
 import sys
 from text2speech2text import text_to_speech_azure
 from streamlit_mic_recorder import speech_to_text
-
-
+import logging
+logging.basicConfig(level = logging.INFO)
 
 load_dotenv()
 azure_key = os.environ["AZURESPEECH_API_KEY"]
 
 def chat_response(prompt,show_promt=True):
+    logging.info('Prompt: ' + prompt) 
     if show_promt:
         # Add user message to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
@@ -27,8 +28,10 @@ def chat_response(prompt,show_promt=True):
             response = agent_execute(agent, prompt)
         st.session_state.chain_messages = agent.memory.chat_memory.messages
         
+        logging.info('Response: ' + response) 
         message_placeholder.markdown(response)
         if togg:
+            logging.info('Should be attempting to say out loud...') 
             text_to_speech_azure(response, region="westeurope", key=azure_key)
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
@@ -78,11 +81,11 @@ if "messages" not in st.session_state:
 
     assistant_initial_message = random.choice(
         [
-            "Hola! Soy BB. ¿En qué te puedo ayudar?",
-            "Me puedes llamar BB. ¿Tienes alguna pregunta para mi?",
-            "¡Hola! Soy BB, tu asistente virtual especializado en dietas. ¿Cómo puedo ayudarte hoy?",
+            "¡Hola! Soy tu asistente de Balance Bites. ¿En qué te puedo ayudar?",
+            "¡Hola! Soy tu asistente de Balance Bites. ¿Tienes alguna pregunta para mi?",
+            "¡Hola! Soy tu asistente de Balance Bites especializado en dietas. ¿Cómo puedo ayudarte hoy?",
             "Bienvenido, estoy aquí para ayudarte con todas tus dudas sobre dietas. ¿En qué puedo asistirte hoy?",
-            "¡Hola! Soy BB, tu compañero para resolver todas tus preguntas sobre dietas. ¿Qué información necesitas?",
+            "¡Hola! Soy tu asistente de Balance Bites, tu compañero para resolver todas tus preguntas sobre dietas. ¿Qué información necesitas?",
         ]
     )
 

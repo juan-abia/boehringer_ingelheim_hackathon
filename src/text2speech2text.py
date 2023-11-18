@@ -4,6 +4,8 @@ from pydub.playback import play
 import azure.cognitiveservices.speech as speechsdk
 from gtts import gTTS
 import os
+import logging
+logging.basicConfig(level = logging.INFO)
 
 def text_to_speech(text, language='es', output_file='output.mp3'):
     """
@@ -79,6 +81,9 @@ def text_to_speech_azure(text, language="es-ES", region="Your_Region", key="Your
     speech_config.speech_synthesis_language = language
     speech_config.speech_synthesis_voice_name = "es-ES-AlvaroNeural"
 
+    logging.info("Using voice: " + speech_config.speech_synthesis_voice_name)
+    logging.info("Using language: " + speech_config.speech_synthesis_language)
+    
     # Crear un sintetizador de voz
     speech_synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config)
 
@@ -87,13 +92,13 @@ def text_to_speech_azure(text, language="es-ES", region="Your_Region", key="Your
 
     # Verificar si la síntesis fue exitosa
     if result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
-        print("Texto convertido a voz con éxito.")
+        logging.info("Texto convertido a voz con éxito.")
     elif result.reason == speechsdk.ResultReason.Canceled:
         cancellation = result.cancellation_details
-        print(f"Error de síntesis de voz: {cancellation.reason}")
+        logging.error(f"Error de síntesis de voz: {cancellation.reason}")
         if cancellation.reason == speechsdk.CancellationReason.Error:
-            print(f"Código de error: {cancellation.error_code}")
-            print(f"Detalles del error: {cancellation.error_details}")
+            logging.error(f"Código de error: {cancellation.error_code}")
+            logging.error(f"Detalles del error: {cancellation.error_details}")
 
 
 if __name__ == "__main__":
