@@ -50,6 +50,7 @@ st.markdown("""
 <style>
     [data-testid=stSidebar] {
         background-color: #8CB48D;
+        width: 70px !important;
     }
 </style>
 """, unsafe_allow_html=True)
