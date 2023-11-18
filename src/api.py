@@ -29,7 +29,7 @@ class FindRecipesByIngredients(BaseTool):
             'includeIngredients': include_ingredients,
             'excludeIngredients': exclude_ingredients,
             'ignorePantry': False,
-            #'sort': 'healthiness',
+            'sort': 'healthiness',
             'addRecipeInformation': False,
             'addRecipeNutrition': False
         }
