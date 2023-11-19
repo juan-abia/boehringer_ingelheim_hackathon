@@ -27,12 +27,12 @@ def agent_execute(agent, user_input: str, keep_memory: bool = True):
 def get_agent(keep_memory: bool = True):
     llm = get_llm()
     tools = [FindRecipesByQuery(), GetRecipeInfo()]
-    agent_kwargs = {
-        "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
-    }
 
     if keep_memory:
         memory = ConversationBufferMemory(memory_key="memory", return_messages=True)
+        agent_kwargs = {
+            "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
+        }
 
         agent = initialize_agent(
             tools=tools,
@@ -48,7 +48,6 @@ def get_agent(keep_memory: bool = True):
             tools=tools,
             llm=llm,
             agent=AgentType.OPENAI_FUNCTIONS,
-            agent_kwargs=agent_kwargs,
             verbose=DEBUG,
             prompt=get_prompt(keep_memory)
         )
