@@ -18,21 +18,22 @@ def get_llm():
     return model
 
 
-def agent_execute(agent, user_input, keep_memory: bool = True):
-    response = agent.run(get_prompt(keep_memory) + user_input + "\nAgent:")
-    cleaned_response = re.sub(r'\s*{[^}]*}\s*', '', response)
+def agent_execute(agent, user_input: str, keep_memory: bool = True):
+    response = agent.run(str(get_prompt(keep_memory) + user_input + "\nAgent:"))
+    cleaned_response = re.sub(r'{[^}]*}', '', response)
     return cleaned_response
 
 
 def get_agent(keep_memory: bool = True):
     llm = get_llm()
     tools = [FindRecipesByQuery(), GetRecipeInfo()]
-    agent_kwargs = {
-        "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
-    }
-    memory = ConversationBufferMemory(memory_key="memory", return_messages=True)
 
     if keep_memory:
+        memory = ConversationBufferMemory(memory_key="memory", return_messages=True)
+        agent_kwargs = {
+            "extra_prompt_messages": [MessagesPlaceholder(variable_name="memory")],
+        }
+
         agent = initialize_agent(
             tools=tools,
             llm=llm,
@@ -47,9 +48,7 @@ def get_agent(keep_memory: bool = True):
             tools=tools,
             llm=llm,
             agent=AgentType.OPENAI_FUNCTIONS,
-            agent_kwargs=agent_kwargs,
             verbose=DEBUG,
-            memory=memory,
             prompt=get_prompt(keep_memory)
         )
 
@@ -80,17 +79,17 @@ def get_prompt(keep_memory: bool = True):
         prompt = PromptTemplate(
             input_variables=["memory"], template=template
         )
+
         return prompt
     else:
         return template
 
 
-
-
 if __name__ == "__main__":
-    agent = get_agent()
+    keep_memory = True
+    my_agent = get_agent(keep_memory=keep_memory)
 
     while True:
         user_text = input("Your input:")
-        response = agent_execute(agent, user_text)
+        response = agent_execute(my_agent, user_text, keep_memory=keep_memory)
         print(response)

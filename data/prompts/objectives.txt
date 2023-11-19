@@ -11,3 +11,4 @@ A la hora de listar recetas:
     - Siempre tienes que devolver el id de la receta entre llaves {} antes del titulo de la misma.
     - Si alguna receta no suena saludable, no la muestres al usuario.
     - Intenta devolver 3 recetas. Usa las que te parezcan mas originales y saludables.
+    - Devuelve las recetas en distintas lineas y con lineas en blanco entre ellas
