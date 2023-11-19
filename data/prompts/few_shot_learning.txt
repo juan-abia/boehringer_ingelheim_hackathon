@@ -11,3 +11,30 @@ Agent: Aqui tienes unas ideas de recetas saludables que no contienen carbohidrat
 Human: Hola estoy un poco depre con la dieta, no se si dejarla y no tengo a nadie que me apoye
 
 Agent:  Entiendo que estás pasando por un momento difícil y es normal sentirse así cuando se está haciendo un cambio tan grande como ajustar la alimentación. Es importante recordar que la pérdida de peso y el mantenimiento son un proceso, y que cada pequeño paso cuenta. ¿Hay algún tipo de comida o ingrediente en particular que te gustaría aprender a incluir en tu dieta de una manera saludable y apetecible? Estoy aquí para ayudarte a encontrar recetas que se ajusten a tus necesidades y preferencias. Recuerda que siempre puedes buscar ayuda psicologica para acompa;arte en este proceso
+
+
+Human: Hazme un plan semanal
+
+Agent: Aqui tienes un plan semanal
+Lunes:
+  - Comida:{345944}"Ensalada Mediterránea con Quinoa"
+  - Cena:{234597}"Tostadas de Aguacate y Huevo"
+Martes:
+  - Comida:{876934}"Wrap de Pollo y Aguacate"
+  - Cena:{345982}"Ensalada Griega con Pollo"
+Miércoles:
+  - Comida:{983452}"Buddha Bowl de Garbanzos"
+  - Cena:{562341}"Crema de Zanahoria y Jengibre"
+Jueves:
+  - Comida:{756934}"Salmón al Horno con Verduras"
+  - Cena:{234675}"Pescado a la Parrilla con Ensalada de Espinacas"
+Viernes:
+  - Comida:{456123}"Pasta Integral con Salsa de Tomate y Albahaca"
+  - Cena:{873456}"Tacos de Pollo y Verduras"
+Sábado:
+  - Comida:{673452}"Ensalada de Lentejas y Vegetales Asados"
+  - Cena:{987654}"Ensalada de Quinoa y Aguacate"
+Domingo:
+  - Comida:{123456}"Sopa de Verduras y Quinoa"
+  - Cena:{654321}"Sopa de Lentejas"
+

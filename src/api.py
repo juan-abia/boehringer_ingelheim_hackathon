@@ -43,7 +43,7 @@ def alexa_response(text: str):
     load_dotenv()
     keep_memory=False
     agent = get_agent(keep_memory=keep_memory)
-    response = agent_execute(agent=agent, user_input=f"Please be very very very very concise {text}", keep_memory=keep_memory)
+    response = agent_execute(agent=agent, user_input=f"{{Alexa}}Please be very very very very concise {text}", keep_memory=keep_memory)
     logging.info(f"Generated response: {response}")
 
     alexa_url = f"https://api-v2.voicemonkey.io/flows?token={os.environ['ALEXA_API_TOKEN']}&flow=1000"

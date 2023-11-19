@@ -1,0 +1,41 @@
+{
+  "manifest": {
+    "apis": {
+      "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:eu-west-1:209284351456:function:5e2b3992-b9b5-43e5-8363-b399a08ed8d0:Release_0"
+        },
+        "interfaces": [],
+        "locales": {},
+        "regions": {
+          "NA": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:us-east-1:209284351456:function:5e2b3992-b9b5-43e5-8363-b399a08ed8d0:Release_0"
+            }
+          },
+          "EU": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:eu-west-1:209284351456:function:5e2b3992-b9b5-43e5-8363-b399a08ed8d0:Release_0"
+            }
+          },
+          "FE": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:us-west-2:209284351456:function:5e2b3992-b9b5-43e5-8363-b399a08ed8d0:Release_0"
+            }
+          }
+        }
+      }
+    },
+    "manifestVersion": "1.0",
+    "publishingInformation": {
+      "distributionCountries": [],
+      "isAvailableWorldwide": true,
+      "locales": {
+        "es-ES": {
+          "name": "capturarvoz"
+        }
+      },
+      "testingInstructions": "Sample Testing Instructions."
+    }
+  }
+}
