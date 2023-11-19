@@ -16,6 +16,6 @@ RUN pip install -r requirements.txt
 # Copy repo folder to working directory
 COPY ./ ./
 
-RUN chmod a+x src/run_web.sh
+RUN chmod a+x src/run_api.sh
 
-CMD ["./src/run_web.sh"]
+CMD ["./src/run_api.sh"]
