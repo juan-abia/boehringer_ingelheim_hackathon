@@ -6,11 +6,27 @@ from PIL import Image
 import sys
 from text2speech2text import text_to_speech_azure
 from streamlit_mic_recorder import speech_to_text
+import base64
 import logging
 logging.basicConfig(level = logging.INFO)
 
+
 load_dotenv()
 azure_key = os.environ["AZURESPEECH_API_KEY"]
+
+def autoplay_audio(file_path: str):
+    with open(file_path, "rb") as f:
+        data = f.read()
+        b64 = base64.b64encode(data).decode()
+        md = f"""
+            <audio controls autoplay="true">
+            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+            </audio>
+            """
+        st.markdown(
+            md,
+            unsafe_allow_html=True,
+        )
 
 def chat_response(prompt,show_promt=True):
     logging.info('Prompt: ' + prompt) 
@@ -33,6 +49,8 @@ def chat_response(prompt,show_promt=True):
         if togg:
             logging.info('Should be attempting to say out loud...') 
             text_to_speech_azure(response, region="westeurope", key=azure_key)
+            autoplay_audio("./data/outputaudio.wav")
+            
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
 
@@ -121,6 +139,7 @@ try:
        chat_response(listened_text)
 except:
     pass
+
 
 # Accept user input
 if prompt := st.chat_input("Puedo ayudarte en algo?"):
