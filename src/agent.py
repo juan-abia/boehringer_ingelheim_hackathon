@@ -56,21 +56,19 @@ def get_agent(keep_memory: bool = True):
 
 
 def get_prompt(keep_memory: bool = True):
-    with open(os.path.join(SRC_DIR, "data", "prompts", "objectives.txt"), "r", encoding="utf8") as f:
-        objectives = f.read()
-
-    with open(os.path.join(SRC_DIR, "data", "prompts", "peer_reviewed_papers.txt"), "r", encoding="utf8") as f:
-        peer_reviewed_papers = f.read()
-
-    with open(os.path.join(SRC_DIR, "data", "prompts", "few_shot_learning.txt"), "r", encoding="utf8") as f:
-        few_shot_learning = f.read()
+    prompts = {"objectives": {}, "rules": {}, "peer_reviewed_papers": {}, "few_shot_learning": {}}
+    for prompt_file_name in prompts:
+        with open(os.path.join(SRC_DIR, "data", "prompts", f"{prompt_file_name}.txt"), "r", encoding="utf8") as f:
+            prompts[prompt_file_name] = f.read()
 
     template = ("System: Eres un asistente cuyo objetivo es:\n"
-                f"```\n{objectives}\n```\n"
+                f"```\n{prompts['objectives']}\n```\n"
+                "System: Estas son tus normas, cúmplelas en todo momento"
+                f"```\n{prompts['rules']}\n```\n" 
                 "System: Este es el mejor conocimiento cientifico sobre dietas en pacientes con obesidad:\n"
-                f"```\n{peer_reviewed_papers}\n```\n"
+                f"```\n{prompts['peer_reviewed_papers']}\n```\n"
                 "System: Aqui tienes ejemplos de la interaccion con el usuario\n"
-                f"```\n{few_shot_learning}\n```\n"
+                f"```\n{prompts['few_shot_learning']}\n```\n"
                 "Aqui empieza la interaccion con el usuario:\n"
                 "{memory}\n"
                 "Human:")

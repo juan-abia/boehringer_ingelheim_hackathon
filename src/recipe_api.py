@@ -61,19 +61,8 @@ class FindRecipesByIngredients(BaseTool):
                    "    exclude_ingredients: comma separated str of ingredients (in english) to NOT use. the ingredients  should ALWAYS be translated to english")
 
     def _run(self, include_ingredients: str = "", exclude_ingredients: str = "") -> str:
-        api_key = os.environ["SPOONACULAR_API_KEY"]
         base_url = "https://api.spoonacular.com/recipes/complexSearch"
-        params = {
-            'apiKey': api_key,
-            'number': 7,
-            'ranking': 1,
-            'includeIngredients': include_ingredients,
-            'excludeIngredients': exclude_ingredients,
-            'ignorePantry': False,
-            'sort': 'healthiness',
-            'addRecipeInformation': False,
-            'addRecipeNutrition': False
-        }
+        params = self._get_api_params(include_ingredients, exclude_ingredients)
 
         response = requests.get(base_url, params=params)
         if response.status_code == 200:
@@ -85,9 +74,42 @@ class FindRecipesByIngredients(BaseTool):
     async def _arun(self) -> str:
         raise NotImplementedError("custom_search does not support async")
 
+    def _get_api_params(self, include_ingredients, exclude_ingredients):
+        api_key = os.environ["SPOONACULAR_API_KEY"]
+        params = {
+            'apiKey': api_key,
+            'number': 7,
+            'ranking': 1,
+            'includeIngredients': include_ingredients,
+            'excludeIngredients': exclude_ingredients,
+            'ignorePantry': False,
+            'sort': 'healthiness',
+            'addRecipeInformation': False,
+            'addRecipeNutrition': False
+        }
+        return params
+
     @staticmethod
     def format_find_recipes_by_ingredients_output(response):
         return json.dumps([{'id': recipe['id'], 'title': recipe['title']} for recipe in response.json()['results']], indent=4)
+
+
+class FindWeeklyRecipesByIngredients(FindRecipesByIngredients):
+    def _get_api_params(self, include_ingredients, exclude_ingredients):
+        api_key = os.environ["SPOONACULAR_API_KEY"]
+        params = {
+            'apiKey': api_key,
+            'number': 20,
+            'ranking': 1,
+            'includeIngredients': include_ingredients,
+            'excludeIngredients': exclude_ingredients,
+            'ignorePantry': False,
+            'sort': 'healthiness',
+            'addRecipeInformation': False,
+            'addRecipeNutrition': False
+        }
+        return params
+
 
 
 class FindRecipesByQuery(BaseTool):
@@ -107,11 +129,11 @@ class FindRecipesByQuery(BaseTool):
         prompt = ("System: You are an assistant, your task is to translate a query of a type of recipes into an actual list of"
                   "recipes consisting of an id and the title of the recipe. Very important. The query you receive is in SPANISH,"
                   "but all the tools you have available are in english")
-        tools = [FindRecipesByIngredients()]
+
         agent = initialize_agent(
             llm=self.get_llm(),
             verbose=DEBUG,
-            tools=tools,
+            tools=self._get_tools(),
             agent=AgentType.OPENAI_MULTI_FUNCTIONS
         )
         res = agent.run(f"{prompt}"
@@ -119,9 +141,21 @@ class FindRecipesByQuery(BaseTool):
                         f"Human: {query}")
         return res
 
+    def _get_tools(self):
+        return [FindRecipesByIngredients()]
 
     async def _arun(self) -> str:
         raise NotImplementedError("custom_search does not support async")
+
+
+class FindWeeklyRecipes(FindRecipesByQuery):
+    name = "find_weekly_recipes_by_query"
+    description = ("Useful for when you need to create a weekly plan of recipes."
+                   "Just provide the query of the recipes you want to look for."
+                   "Only use this tool when you want to create a weekly plan of recipes")
+
+    def _get_tools(self):
+        return [FindWeeklyRecipesByIngredients()]
 
 
 if __name__ == "__main__":
