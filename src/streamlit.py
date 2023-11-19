@@ -25,7 +25,7 @@ def chat_response(prompt,show_promt=True):
     with st.chat_message("assistant",avatar="🍎"):
         message_placeholder = st.empty()
         with st.spinner("Pensando..."):
-            response = agent_execute(agent, prompt)
+            response = agent_execute(agent=agent, user_input=prompt, keep_memory=True)
         st.session_state.chain_messages = agent.memory.chat_memory.messages
         
         logging.info('Response: ' + response) 
@@ -40,7 +40,7 @@ sys.path.append(os.getcwd())
 from src.agent import get_agent, agent_execute
 
 # Start farmer partner agent
-agent = get_agent()
+agent = get_agent(keep_memory=True)
 if "chain_messages" in st.session_state:
     agent.memory.chat_memory.messages = st.session_state.chain_messages
 

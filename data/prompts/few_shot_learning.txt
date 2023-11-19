@@ -1,9 +1,12 @@
 Human: Mi medico me ha dicho que no debo tomar mucho carbohidratos, me puedes dar ideas?
 
 Agent: Aqui tienes unas ideas de recetas saludables que no contienen carbohidratos:
- {434689}."Sopa de Lentejas Rojas con Pollo y Nabo"
- {234634} "Ensalada de rucula con queso de cabra"
-.{780423} "Poke bowl de atun con piña"
+{434689}"Sopa de Lentejas Rojas con Pollo y Nabo"
+
+{234634}"Ensalada de rucula con queso de cabra"
+
+{780423}"Sopa Negra de Frijoles con Batata y Col Rizada" (Esta receta contiene pollo aunque su nombre no lo especifica)
+
 
 Human: Hola estoy un poco depre con la dieta, no se si dejarla y no tengo a nadie que me apoye
 

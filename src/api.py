@@ -10,6 +10,7 @@ class QueryInput(BaseModel):
     password: str
 
 app = FastAPI()
+keep_memory=False
 
 @app.get("/")
 def read_root():
@@ -19,10 +20,11 @@ def read_root():
 def execute(text: str, password: str):
     load_dotenv()
 
-    agent = get_agent(keep_memory=False)
+    agent = get_agent(keep_memory=keep_memory)
     if str(password) != str(os.environ["BB_API_KEY"]):
         raise HTTPException(status_code=401, detail="Unauthorized")
-    return agent_execute(agent, f"Please be very very very very concise {text}", keep_memory=False)
+    return agent_execute(agent=agent, user_input="Please be very very very very concise\n {text}", keep_memory=keep_memory)
+
 
 @app.post("/query")
 def query(data: QueryInput):
@@ -37,7 +39,7 @@ def query(data: QueryInput):
 def alexa_response(text: str):
     load_dotenv()
 
-    agent = get_agent(keep_memory=False)
-    response = agent_execute(agent, f"Please be very very very very concise {text}", keep_memory=False)
+    agent = get_agent(keep_memory=keep_memory)
+    response = agent_execute(agent=agent, user_input="Please be very very very very concise {text}", keep_memory=keep_memory)
     alexa_url = f"https://api-v2.voicemonkey.io/flows?token={os.environ['ALEXA_API_TOKEN']}&flow=1000&var-text_rx={response}"
     requests.post(alexa_url)
