@@ -19,9 +19,15 @@
           "samples": []
         },
         {
-          "slots": [],
+          "slots": [
+            {
+              "name": "frase",
+              "type": "AMAZON.SearchQuery"
+            }
+          ],
           "name": "HelloWorldIntent",
           "samples": [
+            "mira {frase}",
             "hola",
             "como estás",
             "di hola mundo",
@@ -42,7 +48,7 @@
         }
       ],
       "types": [],
-      "invocationName": "hola juan"
+      "invocationName": "mi asistente"
     }
   }
 }

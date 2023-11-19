@@ -28,7 +28,7 @@ class LaunchRequestHandler(AbstractRequestHandler):
 
     def handle(self, handler_input):
         # type: (HandlerInput) -> Response
-        speak_output = "Welcome, you can say Hello or Help. Which would you like to try?"
+        speak_output = "Hola, te paso con Balanced baits, cuéntale!"
 
         return (
             handler_input.response_builder
@@ -45,18 +45,22 @@ class HelloWorldIntentHandler(AbstractRequestHandler):
         return ask_utils.is_intent_name("HelloWorldIntent")(handler_input)
 
     def handle(self, handler_input):
-        # type: (HandlerInput) -> Response
-        texto = "ayudame por favor"
+        
+        
+        frase = handler_input.request_envelope.request.intent.slots['frase'].value
         url = "https://api-bi-hack.azurewebsites.net/query"
         headers = {'Content-Type': 'application/json'}
-        #data = {"var-text_rx": texto}
-        data = {"text": texto, "password": "LatteDeMoca"}
+        data = {"text": frase, "password": "LatteDeMoca"}
         requests.post(url, headers=headers, json=data)
-        speak_output = "quiero llorar"
+
+
+        speak_output = f"Has dicho: {frase}"
+        
+
 
         return (
             handler_input.response_builder
-                .speak(speak_output)
+                #.speak(speak_output)
                 # .ask("add a reprompt if you want to keep the session open for the user to respond")
                 .response
         )

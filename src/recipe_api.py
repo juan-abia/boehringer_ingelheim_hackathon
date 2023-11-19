@@ -111,7 +111,6 @@ class FindWeeklyRecipesByIngredients(FindRecipesByIngredients):
         return params
 
 
-
 class FindRecipesByQuery(BaseTool):
     name = "find_recipes_by_query"
     description = ("Useful for when you need find a list of recipes."
