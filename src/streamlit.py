@@ -50,7 +50,7 @@ def chat_response(prompt,show_promt=True):
             logging.info('Should be attempting to say out loud...') 
             text_to_speech_azure(response, region="westeurope", key=azure_key)
             autoplay_audio("./data/outputaudio.wav")
-            
+
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
 
@@ -99,11 +99,11 @@ if "messages" not in st.session_state:
 
     assistant_initial_message = random.choice(
         [
-            "¡Hola! Soy tu asistente de Balance Bites. ¿En qué te puedo ayudar?",
-            "¡Hola! Soy tu asistente de Balance Bites. ¿Tienes alguna pregunta para mi?",
-            "¡Hola! Soy tu asistente de Balance Bites especializado en dietas. ¿Cómo puedo ayudarte hoy?",
+            "¡Hola! Soy tu asistente de Balanced Bites. ¿En qué te puedo ayudar?",
+            "¡Hola! Soy tu asistente de Balanced Bites. ¿Tienes alguna pregunta para mi?",
+            "¡Hola! Soy tu asistente de Balanced Bites especializado en dietas. ¿Cómo puedo ayudarte hoy?",
             "Bienvenido, estoy aquí para ayudarte con todas tus dudas sobre dietas. ¿En qué puedo asistirte hoy?",
-            "¡Hola! Soy tu asistente de Balance Bites, tu compañero para resolver todas tus preguntas sobre dietas. ¿Qué información necesitas?",
+            "¡Hola! Soy tu asistente de Balanced Bites, tu compañero para resolver todas tus preguntas sobre dietas. ¿Qué información necesitas?",
         ]
     )
 
