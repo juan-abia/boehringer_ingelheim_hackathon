@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  imageRegistry: boehringeringelheim.azurecr.io
+  imageRegistry: bihackathon.azurecr.io
   webImageRepository: boehringeringelheim
   apiImageRepository: apiboehringeringelheim
 
